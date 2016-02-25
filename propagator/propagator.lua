@@ -142,6 +142,8 @@ function Propagator:propagateEpoch(dataset, report)
    if self._stats and self._verbose then
       print("==> example speed = "..self._example_speed..' examples/s')
    end
+   print('losslist:', self.losslist)
+   torch.save('/home/jie/losslist/epoch_loss.dat', torch.LongTensor(self.losslist))
 end      
 
 function Propagator:propagateBatch(batch)
@@ -271,8 +273,6 @@ function Propagator:callback(callback)
 end
 
 function Propagator:epochCallback(callback)
-   print('losslist:', self.losslist)
-   torch.save('/home/jie/losslist/epoch_loss.dat', torch.LongTensor(self.losslist))
    if callback then
       assert(torch.type(callback) == 'function', "expecting function")
       self._epoch_callback = callback
