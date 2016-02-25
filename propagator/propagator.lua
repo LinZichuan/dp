@@ -166,6 +166,7 @@ function Propagator:forward(batch)
    end
    -- measure loss
    self.err = self._loss:forward(self.output, target)
+   print(self.err)
 end
 
 function Propagator:monitor(batch, report)
