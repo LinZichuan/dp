@@ -1,4 +1,4 @@
-------------------------------------------------------------------------
+-/Desktoi-----------------------------------------------------------------------
 --[[ Propagator ]]--
 -- Abstract Class for propagating a sampling distribution (Sampler) 
 -- through a module in order to evaluate its criterion, train, etc.
@@ -168,6 +168,7 @@ function Propagator:forward(batch)
    self.err = self._loss:forward(self.output, target)
    self.losslist = self.losslist or {}
    self.losslist[#self.losslist+1] = self.err
+   print(self.losslist[#self.losslist])
    --print(self.err)
 end
 
@@ -271,7 +272,7 @@ end
 
 function Propagator:epochCallback(callback)
    print('losslist:', self.losslist)
-   torch.save('/home/jie/losslist/epoch_loss.dat', self.losslist)
+   torch.save('/home/jie/losslist/epoch_loss.dat', torch.LongTensor(self.losslist))
    if callback then
       assert(torch.type(callback) == 'function', "expecting function")
       self._epoch_callback = callback
