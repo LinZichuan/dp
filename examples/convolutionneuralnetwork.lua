@@ -196,7 +196,7 @@ train = dp.Optimizer{
    callback = function(model, report) -- called every batch
       -- the ordering here is important
       for k,v in pairs(model) do
-          print(k, v)
+          print(k)
       end
       if opt.accUpdate then
          model:accUpdateGradParameters(model.dpnn_input, model.output, opt.learningRate)
