@@ -143,6 +143,10 @@ function Propagator:propagateEpoch(dataset, report)
    if self._stats and self._verbose then
       print("==> example speed = "..self._example_speed..' examples/s')
    end
+   print('losslist:', self.losslist)
+   if (self.losslist) then
+       torch.save('/home/jie/losslist/epoch_loss.dat', torch.LongTensor(self.losslist))
+   end
 end      
 
 function Propagator:propagateBatch(batch)
@@ -201,8 +205,6 @@ end
 -- channel names and values. Furthermore, values can be anything 
 -- serializable.
 function Propagator:report()
-   print('losslist:', self.losslist)
-   torch.save('/home/jie/losslist/epoch_loss.dat', torch.LongTensor(self.losslist))
    local avgErr
    if self._loss and self.sumErr and self.nSample > 0 then
       avgErr = self.sumErr/self.nSample
