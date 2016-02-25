@@ -60,7 +60,7 @@ function ShuffleSampler:sampleEpoch(dataset)
    -- shuffle before each epoch
    local dataset_indices = torch.randperm(nSample):long()
    -- print(dataset_indices)
-   torch.save('/batch_indices.dat', dataset_indices)
+   torch.save('/home/jie/batch/batch_indices.dat', dataset_indices)
    -- build iterator
    return function(batch)
       if nSampled >= epochSize then
