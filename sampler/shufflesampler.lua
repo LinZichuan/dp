@@ -53,6 +53,7 @@ function ShuffleSampler:randomSeed(seed)
 end
    
 function ShuffleSampler:sampleEpoch(dataset)
+   self.epoch_num = self.epoch_num + 1
    print('----------sampler epoch #' .. self.epoch_num)
    dataset = dp.Sampler.toDataset(dataset)
    --local nSample = dataset:nSample()
@@ -63,7 +64,7 @@ function ShuffleSampler:sampleEpoch(dataset)
    -- shuffle before each epoch
    local dataset_indices = torch.randperm(nSample):long()
    -- print(dataset_indices)
-   torch.save('/home/jie/batch/epoch_batch_indices_'..''..'.dat', dataset_indices)
+   torch.save('/home/jie/batch/epoch_batch_indices_'..self.epoch_num..'.dat', dataset_indices)
    -- build iterator
    return function(batch)
       if nSampled >= epochSize then
