@@ -1,8 +1,8 @@
-package = "dp"
+package = "lzcdp"
 version = "scm-1"
 
 source = {
-   url = "git://github.com/nicholas-leonard/dp",
+   url = "git://github.com/LinZichuan/dp",
    tag = "master"
 }
 
@@ -13,7 +13,7 @@ With an emphasis on flexibility through the elegant use of object-oriented desig
 dp is a deep learning library inspired by pylearn2
 designed for streamlining research and development using the Torch7 distribution. 
 ]],
-   homepage = "https://github.com/nicholas-leonard/dp/blob/master/README.md"
+   homepage = "https://github.com/LinZichuan/dp/blob/master/README.md"
 }
 
 dependencies = {
