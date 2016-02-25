@@ -1,4 +1,4 @@
-package = "lzcdp"
+package = "dp"
 version = "scm-1"
 
 source = {
