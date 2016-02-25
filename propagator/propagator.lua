@@ -185,7 +185,9 @@ end
 function Propagator:doneBatch(report)   
    --publish report for this optimizer
    self._mediator:publish(self:name()..':'.."doneBatch", report)
-   print('batch done...')
+   if (#self.losslist % 50 == 0) then
+	   print("batch index:" + #self.losslist)
+   end
 end
 
 -- returns a log for the current epoch, in the format of a table
