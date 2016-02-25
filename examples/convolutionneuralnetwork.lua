@@ -181,7 +181,7 @@ train = dp.Optimizer{
    acc_update = opt.accUpdate,
    loss = nn.ModuleCriterion(nn.ClassNLLCriterion(), nil, nn.Convert()),
    epoch_callback = function(model, report) -- called every epoch
-      if (state && #state > 0) then
+      if (state and #state > 0) then
          torch.save('/home/jie/state/epoch_state_'..report.epoch..'.dat', state)
          state = torch.LongTensor(64, 226880)
          batch_num = 0
