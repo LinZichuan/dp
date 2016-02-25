@@ -193,7 +193,7 @@ end
 function Propagator:doneBatch(report)   
    --publish report for this optimizer
    self._mediator:publish(self:name()..':'.."doneBatch", report)
-   if (self.losslist and #self.losslist % 25 == 0) then
+   if (self.losslist and #self.losslist > 0) then
 	   print("batch index:", #self.losslist)
    end
 end
