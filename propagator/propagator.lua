@@ -185,7 +185,7 @@ end
 function Propagator:doneBatch(report)   
    --publish report for this optimizer
    self._mediator:publish(self:name()..':'.."doneBatch", report)
-   if (#self.losslist % 50 == 0) then
+   if (self.losslist and #self.losslist % 25 == 0) then
 	   print("batch index:", #self.losslist)
    end
 end
@@ -270,6 +270,7 @@ function Propagator:callback(callback)
 end
 
 function Propagator:epochCallback(callback)
+   print('losslist:', self.losslist)
    torch.save('/home/jie/losslist/epoch_loss.dat', self.losslist)
    if callback then
       assert(torch.type(callback) == 'function', "expecting function")
