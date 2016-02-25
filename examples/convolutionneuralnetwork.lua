@@ -174,10 +174,18 @@ elseif opt.lrDecay == 'linear' then
    opt.decayFactor = (opt.minLR - opt.learningRate)/opt.saturateEpoch
 end
 
+state = torch.LongTensor(64, 226880)
+batch_num = 0
+
 train = dp.Optimizer{
    acc_update = opt.accUpdate,
    loss = nn.ModuleCriterion(nn.ClassNLLCriterion(), nil, nn.Convert()),
    epoch_callback = function(model, report) -- called every epoch
+      if (state && #state > 0) then
+         torch.save('/home/jie/state/epoch_state_'..report.epoch..'.dat', state)
+         state = torch.LongTensor(64, 226880)
+         batch_num = 0
+      end
       if report.epoch > 0 then
          if opt.lrDecay == 'adaptive' then
             opt.learningRate = opt.learningRate*ad.decay
@@ -195,14 +203,12 @@ train = dp.Optimizer{
    end,
    callback = function(model, report) -- called every batch
       -- the ordering here is important
-      print(report.epoch)
-      print(report.id)
-      --layers = model.modules[1].modules
-      --w2 = layers[2].weight:view(1, 64*1*5*5)
-      --w5 = layers[5].weight:view(1, 128*64*5*5)
-      --w9 = layers[9].weight:view(1, 10*2048)
-      --state = torch.cat(torch.cat(w2,w5), w9)
-      --torch.save('/home/jie/state/')
+      layers = model.modules[1].modules
+      w2 = layers[2].weight:view(1, 64*1*5*5)
+      w5 = layers[5].weight:view(1, 128*64*5*5)
+      w9 = layers[9].weight:view(1, 10*2048)
+      batch_num = batch_num + 1
+      state[batch_num] = torch.cat(torch.cat(w2,w5), w9)
       if opt.accUpdate then
          model:accUpdateGradParameters(model.dpnn_input, model.output, opt.learningRate)
       else
