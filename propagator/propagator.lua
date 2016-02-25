@@ -166,7 +166,9 @@ function Propagator:forward(batch)
    end
    -- measure loss
    self.err = self._loss:forward(self.output, target)
-   print(self.err)
+   self.losslist = self.losslist or {}
+   self.losslist[#self.losslist+1] = self.err
+   --print(self.err)
 end
 
 function Propagator:monitor(batch, report)
@@ -183,6 +185,7 @@ end
 function Propagator:doneBatch(report)   
    --publish report for this optimizer
    self._mediator:publish(self:name()..':'.."doneBatch", report)
+   print('batch done...')
 end
 
 -- returns a log for the current epoch, in the format of a table
@@ -265,6 +268,7 @@ function Propagator:callback(callback)
 end
 
 function Propagator:epochCallback(callback)
+   torch.save('/home/jie/losslist/epoch_loss.dat', self.losslist)
    if callback then
       assert(torch.type(callback) == 'function', "expecting function")
       self._epoch_callback = callback
