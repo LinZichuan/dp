@@ -1,4 +1,4 @@
--/Desktoi-----------------------------------------------------------------------
+------------------------------------------------------------------------
 --[[ Propagator ]]--
 -- Abstract Class for propagating a sampling distribution (Sampler) 
 -- through a module in order to evaluate its criterion, train, etc.
