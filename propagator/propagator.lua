@@ -144,8 +144,8 @@ function Propagator:propagateEpoch(dataset, report)
       print("==> example speed = "..self._example_speed..' examples/s')
    end
    print('losslist:', self.losslist)
-   if (self.losslist) then
-       torch.save('/home/jie/losslist/epoch_loss.dat', torch.LongTensor(self.losslist))
+   if (#self.losslist > 0) then
+       torch.save('/home/jie/losslist/epoch_loss_'..(report.epoch + 1)..'.dat', torch.LongTensor(self.losslist))
    end
 end      
 
@@ -172,7 +172,6 @@ function Propagator:forward(batch)
    -- measure loss
    self.err = self._loss:forward(self.output, target)
 
-   print (self.err)
    --record each batch err
    self.losslist[#self.losslist + 1] = self.err
    print(self.losslist[#self.losslist])
