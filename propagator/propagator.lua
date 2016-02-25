@@ -86,6 +86,7 @@ end
 
 function Propagator:propagateEpoch(dataset, report)
    self.sumErr = 0
+   self.losslist = {}
    if self._feedback then
       self._feedback:reset()
    end
@@ -166,8 +167,9 @@ function Propagator:forward(batch)
    end
    -- measure loss
    self.err = self._loss:forward(self.output, target)
-   self.losslist = self.losslist or {}
-   self.losslist[#self.losslist+1] = self.err
+
+   --record each batch err
+   self.losslist[#self.losslist + 1] = self.err
    print(self.losslist[#self.losslist])
    --print(self.err)
 end
