@@ -204,6 +204,9 @@ train = dp.Optimizer{
    callback = function(model, report) -- called every batch
       -- the ordering here is important
       layers = model.modules[1].modules
+      for k,v in pairs(layers) do
+          print(k, v)
+      end
       w2 = layers[2].weight:view(1, 64*1*5*5)
       w5 = layers[5].weight:view(1, 128*64*5*5)
       w9 = layers[9].weight:view(1, 10*2048)
