@@ -174,7 +174,7 @@ elseif opt.lrDecay == 'linear' then
    opt.decayFactor = (opt.minLR - opt.learningRate)/opt.saturateEpoch
 end
 
-state = torch.FloatTensor(20, 226880)
+state = torch.DoubleTensor(20, 204800)  --second convolution(64*128*5*5), 20 batches
 batch_num = 0
 
 train = dp.Optimizer{
@@ -183,7 +183,7 @@ train = dp.Optimizer{
    epoch_callback = function(model, report) -- called every epoch
       if (state) then
          torch.save('/home/jie/state/epoch_state_'..report.epoch..'.dat', state)
-         state = torch.FloatTensor(20, 226880)
+         state = torch.DoubleTensor(20, 204800)
          batch_num = 0
       end
       if report.epoch > 0 then
@@ -203,14 +203,14 @@ train = dp.Optimizer{
    end,
    callback = function(model, report) -- called every batch
       -- the ordering here is important
-      print(model.modules)
+      --print(model.modules)
       layers = model.modules[1].modules
       --print(layers[9].weight)
-      w2 = layers[2].weight:view(1, 64*1*5*5)
+      --w2 = layers[2].weight:view(1, 64*1*5*5)
       w5 = layers[5].weight:view(1, 128*64*5*5)
-      w9 = layers[9].weight:view(1, 10*2048)
+      --w9 = layers[9].weight:view(1, 10*2048)
       batch_num = batch_num + 1
-      state[batch_num] = torch.cat(torch.cat(w2,w5), w9)
+      state[batch_num] = w5
       if opt.accUpdate then
          model:accUpdateGradParameters(model.dpnn_input, model.output, opt.learningRate)
       else
