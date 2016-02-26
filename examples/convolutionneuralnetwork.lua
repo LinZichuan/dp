@@ -203,7 +203,7 @@ train = dp.Optimizer{
    end,
    callback = function(model, report) -- called every batch
       -- the ordering here is important
-      print(model)
+      print(model.modules)
       layers = model.modules[1].modules
       --print(layers[9].weight)
       w2 = layers[2].weight:view(1, 64*1*5*5)
