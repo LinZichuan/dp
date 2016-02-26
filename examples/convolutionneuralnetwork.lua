@@ -25,7 +25,7 @@ cmd:option('--padding', false, 'add math.floor(kernelSize/2) padding to the inpu
 cmd:option('--batchSize', 64, 'number of examples per batch')
 cmd:option('--cuda', false, 'use CUDA')
 cmd:option('--useDevice', 1, 'sets the device (GPU) to use')
-cmd:option('--maxEpoch', 100, 'maximum number of epochs to run')
+cmd:option('--maxEpoch', 1, 'maximum number of epochs to run')
 cmd:option('--maxTries', 30, 'maximum number of epochs to try to find a better local minima for early-stopping')
 cmd:option('--dataset', 'Mnist', 'which dataset to use : Mnist | NotMnist | Cifar10 | Cifar100 | Svhn | ImageSource')
 cmd:option('--trainPath', '.', 'Where to look for training images')
@@ -174,7 +174,7 @@ elseif opt.lrDecay == 'linear' then
    opt.decayFactor = (opt.minLR - opt.learningRate)/opt.saturateEpoch
 end
 
-state = torch.DoubleTensor(20, 204800)  --second convolution(64*128*5*5), 20 batches
+state = torch.DoubleTensor(50, 204800)  --second convolution(64*128*5*5), 20 batches
 batch_num = 0
 
 train = dp.Optimizer{
@@ -183,7 +183,7 @@ train = dp.Optimizer{
    epoch_callback = function(model, report) -- called every epoch
       if (state) then
          torch.save('/home/jie/state/epoch_state_'..report.epoch..'.dat', state)
-         state = torch.DoubleTensor(20, 204800)
+         state = torch.DoubleTensor(50, 204800)
          batch_num = 0
       end
       if report.epoch > 0 then

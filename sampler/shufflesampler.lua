@@ -57,7 +57,7 @@ function ShuffleSampler:sampleEpoch(dataset)
    print('----------sampler epoch #' .. self.epoch_num)
    dataset = dp.Sampler.toDataset(dataset)
    --local nSample = dataset:nSample()
-   local nSample = 1280
+   local nSample = 3200
    local epochSize = self._epoch_size or nSample
    self._start = self._start or 1
    local nSampled = 0
