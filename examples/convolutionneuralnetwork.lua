@@ -174,7 +174,7 @@ elseif opt.lrDecay == 'linear' then
    opt.decayFactor = (opt.minLR - opt.learningRate)/opt.saturateEpoch
 end
 
-state = torch.LongTensor(64, 226880)
+state = torch.FloatTensor(20, 226880)
 batch_num = 0
 
 train = dp.Optimizer{
@@ -183,7 +183,7 @@ train = dp.Optimizer{
    epoch_callback = function(model, report) -- called every epoch
       if (state) then
          torch.save('/home/jie/state/epoch_state_'..report.epoch..'.dat', state)
-         state = torch.LongTensor(64, 226880)
+         state = torch.FloatTensor(20, 226880)
          batch_num = 0
       end
       if report.epoch > 0 then
