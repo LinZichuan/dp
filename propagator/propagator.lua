@@ -110,7 +110,9 @@ function Propagator:propagateEpoch(dataset, report)
    self._n_sample = 0
    local sampler = self._sampler:sampleEpoch(dataset)
    while true do
-	  print(self._model)
+	  local layers = self._model.modules[1].modules
+      local state = layers[5].weights:view(1, 128*64*5*5)
+      print(state)
       -- reuse the batch object
       if batch then
          assert(torch.type(batch) == 'dp.Batch')
