@@ -174,7 +174,8 @@ elseif opt.lrDecay == 'linear' then
    opt.decayFactor = (opt.minLR - opt.learningRate)/opt.saturateEpoch
 end
 
-state = torch.DoubleTensor(50, 204800)  --second convolution(64*128*5*5), 20 batches
+--state = torch.DoubleTensor(50, 204800)  --second convolution(64*128*5*5), 20 batches
+state = torch.DoubleTensor(204800)  --second convolution(64*128*5*5), 1 batches
 batch_num = 0
 
 train = dp.Optimizer{
@@ -210,7 +211,8 @@ train = dp.Optimizer{
       w5 = layers[5].weight:view(1, 128*64*5*5)
       --w9 = layers[9].weight:view(1, 10*2048)
       batch_num = batch_num + 1
-      state[batch_num] = w5
+      state = w5
+	  --[here] => pass state to DQN
       if opt.accUpdate then
          model:accUpdateGradParameters(model.dpnn_input, model.output, opt.learningRate)
       else
