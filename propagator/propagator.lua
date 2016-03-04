@@ -145,7 +145,7 @@ function Propagator:propagateEpoch(dataset, report)
    end
    print('losslist:', self.losslist)
    if (#self.losslist > 0) then
-       torch.save('/home/jie/losslist/epoch_loss_'..(report.epoch + 1)..'.dat', torch.LongTensor(self.losslist))
+       torch.save('/home/jie/losslist/epoch_loss_'..(report.epoch + 1)..'.dat', torch.DoubleTensor(self.losslist))
    end
 end      
 
