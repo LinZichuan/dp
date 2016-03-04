@@ -113,6 +113,8 @@ function Propagator:propagateEpoch(dataset, report)
 	  local layers = self._model.modules[1].modules
       local state = layers[5].weight:view(1, 128*64*5*5)
       print(state)
+      --TODO
+      --[here] => pass state to DQN, return batch
       -- reuse the batch object
       if batch then
          assert(torch.type(batch) == 'dp.Batch')
@@ -147,6 +149,8 @@ function Propagator:propagateEpoch(dataset, report)
       print("==> example speed = "..self._example_speed..' examples/s')
    end
    print('losslist:', self.losslist)
+   --TODO
+   --[here] => pass batch loss(add penalty) to DQN
    if (#self.losslist > 0) then
        torch.save('/home/jie/losslist/epoch_loss_'..(report.epoch + 1)..'.dat', torch.DoubleTensor(self.losslist))
    end
