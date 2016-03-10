@@ -114,7 +114,7 @@ function Propagator:propagateEpoch(dataset, report)
       local state = layers[5].weight:view(1, 128*64*5*5)
       --print(state)
       --TODO
-      --[here] => pass state to DQN, return batch
+      --[here] => save state for DQN
       -- reuse the batch object
       if batch then
          assert(torch.type(batch) == 'dp.Batch')

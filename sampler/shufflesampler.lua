@@ -73,6 +73,7 @@ function ShuffleSampler:sampleEpoch(dataset)
       stop = math.min(self._start+self._batch_size-1,nSample)
       batch = batch or dataset:batch(stop-self._start+1)
       local batch_indices = dataset_indices:sub(self._start,stop)
+	  print(batch_indices)
       -- inputs and targets
       dataset:index(batch, batch_indices)
       local indices = batch:indices() or torch.Tensor()
