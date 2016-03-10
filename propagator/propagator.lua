@@ -109,7 +109,7 @@ function Propagator:propagateEpoch(dataset, report)
    
    self._n_sample = 0
    local sampler = self._sampler:sampleEpoch(dataset)
-   while true do
+   --while true do
 	  local layers = self._model.modules[1].modules
       local state = layers[5].weight:view(1, 128*64*5*5)
       --print(state)
@@ -138,7 +138,7 @@ function Propagator:propagateEpoch(dataset, report)
       end
       last_n = n
       n_batch = n_batch + 1
-   end
+   --end
    
    -- time taken
    self._epoch_duration = sys.clock() - start_time
@@ -178,6 +178,8 @@ function Propagator:forward(batch)
    end
    -- measure loss
    self.err = self._loss:forward(self.output, target)
+   --TODO [here] => save loss in xxxx/save/Loss
+   torch.save('/home/jie/lzc/DeepMind-Atari-Deep-Q-Learner/save/Loss', self.err)
 
    --record each batch err
    self.losslist[#self.losslist + 1] = self.err

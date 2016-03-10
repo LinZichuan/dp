@@ -184,7 +184,7 @@ train = dp.Optimizer{
    epoch_callback = function(model, report) -- called every epoch
       if (state) then
          torch.save('/home/jie/state/epoch_state_'..report.epoch..'.dat', state)
-         state = torch.DoubleTensor(50, 204800)
+         state = torch.DoubleTensor(204800)
          batch_num = 0
       end
       if report.epoch > 0 then
@@ -204,15 +204,6 @@ train = dp.Optimizer{
    end,
    callback = function(model, report) -- called every batch
       -- the ordering here is important
-      --print(model.modules)
-      layers = model.modules[1].modules
-      --print(layers[9].weight)
-      --w2 = layers[2].weight:view(1, 64*1*5*5)
-      w5 = layers[5].weight:view(1, 128*64*5*5)
-      --w9 = layers[9].weight:view(1, 10*2048)
-      batch_num = batch_num + 1
-      state = w5
-	  --[here] => pass state to DQN
       if opt.accUpdate then
          model:accUpdateGradParameters(model.dpnn_input, model.output, opt.learningRate)
       else
@@ -221,6 +212,18 @@ train = dp.Optimizer{
       end
       model:maxParamNorm(opt.maxOutNorm) -- affects params
       model:zeroGradParameters() -- affects gradParams 
+
+	  --after updating weights
+      --print(model.modules)
+      layers = model.modules[1].modules
+      --print(layers[9].weight)
+      --w2 = layers[2].weight:view(1, 64*1*5*5)
+      w5 = layers[5].weight:view(1, 128*64*5*5)
+      --w9 = layers[9].weight:view(1, 10*2048)
+      batch_num = batch_num + 1
+      state = w5
+	  --[here] => save state for DQN
+	  torch.save('/home/jie/lzc/DeepMind-Atari-Deep-Q-Learner/save/State', state)
    end,
    feedback = dp.Confusion(),
    sampler = dp.ShuffleSampler{batch_size = opt.batchSize},
