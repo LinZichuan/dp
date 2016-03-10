@@ -140,6 +140,7 @@ function Propagator:propagateEpoch(dataset, report)
       n_batch = n_batch + 1
    --end
    
+   sleep(10)
    -- time taken
    self._epoch_duration = sys.clock() - start_time
    self._batch_duration = self._epoch_duration / math.max(n_batch, 0.000001)
