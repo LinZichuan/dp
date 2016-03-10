@@ -74,7 +74,7 @@ function ShuffleSampler:sampleEpoch(dataset)
       batch = batch or dataset:batch(stop-self._start+1)
       --local batch_indices = dataset_indices:sub(self._start,stop)
 	  --TODO[here] => read batch indices from xxxx/save/Action
-	  local batch_indices = torch.load('../../save/Action')
+	  local batch_indices = torch.load('/home/jie/lzc/DeepMind-Atari-Deep-Q-Learner/save/Action')
 	  print(batch_indices)
       -- inputs and targets
       dataset:index(batch, batch_indices)
