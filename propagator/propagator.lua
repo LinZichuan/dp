@@ -109,7 +109,7 @@ function Propagator:propagateEpoch(dataset, report)
    
    self._n_sample = 0
    local sampler = self._sampler:sampleEpoch(dataset)
-   --while true do
+   while true do
 	  local layers = self._model.modules[1].modules
       local state = layers[5].weight:view(1, 128*64*5*5)
       --print(state)
@@ -138,9 +138,9 @@ function Propagator:propagateEpoch(dataset, report)
       end
       last_n = n
       n_batch = n_batch + 1
-   --end
+   end
    
-   sleep(10)
+   --sleep(10)
    -- time taken
    self._epoch_duration = sys.clock() - start_time
    self._batch_duration = self._epoch_duration / math.max(n_batch, 0.000001)
