@@ -112,7 +112,7 @@ function Propagator:propagateEpoch(dataset, report)
    while true do
 	  local layers = self._model.modules[1].modules
       local state = layers[5].weight:view(1, 128*64*5*5)
-      print(state)
+      --print(state)
       --TODO
       --[here] => pass state to DQN, return batch
       -- reuse the batch object
